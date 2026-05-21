@@ -1,0 +1,12 @@
+API 연결 오류 수정 안내 v5
+
+수정 내용:
+1. package.json의 "type": "module" 설정과 충돌하지 않도록 api/guide.js, api/generate-image.js를 ES Module 방식으로 변경했습니다.
+2. module.exports 대신 export default async function handler(req, res) 구조를 사용합니다.
+3. vercel.json은 최소 설정으로 유지했습니다.
+
+Vercel에서 해야 할 일:
+1. 이 수정본의 api/guide.js, api/generate-image.js, package.json, vercel.json을 GitHub 저장소에 반영
+2. Commit changes
+3. Vercel에서 Redeploy
+4. Project Settings > Environment Variables에 OPENAI_API_KEY가 있는지 확인
