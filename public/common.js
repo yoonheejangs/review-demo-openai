@@ -41,10 +41,11 @@ function buildTopNav(activePage) {
   <nav class="flex flex-wrap gap-2 mb-6">
     <a class="nav-pill ${activePage==='password'?'active':''}" href="password.html"><i class="fa-solid fa-lock"></i>비밀번호</a>
     <a class="nav-pill ${activePage==='index'?'active':''}" href="index.html"><i class="fa-solid fa-circle-info"></i>안내</a>
+    <a class="nav-pill ${activePage==='pre'?'active':''}" href="pre-survey-demo.html"><i class="fa-solid fa-clipboard-question"></i>사전 설문</a>
     <a class="nav-pill ${activePage==='flow'?'active':''}" href="demo-flow.html"><i class="fa-solid fa-list-ol"></i>실험 흐름</a>
-    <a class="nav-pill ${activePage==='g1'?'active':''}" href="group1-demo.html"><i class="fa-solid fa-pen"></i>Group 1</a>
-    <a class="nav-pill ${activePage==='g2'?'active':''}" href="group2-demo.html"><i class="fa-solid fa-cubes"></i>Group 2</a>
-    <a class="nav-pill ${activePage==='g3'?'active':''}" href="group3-demo.html"><i class="fa-solid fa-trophy"></i>Group 3</a>
+    <a class="nav-pill ${activePage==='g1'?'active':''}" href="group1-demo.html"><i class="fa-solid fa-pen"></i>Control</a>
+    <a class="nav-pill ${activePage==='g2'?'active':''}" href="group2-demo.html"><i class="fa-solid fa-cubes"></i>Context</a>
+    <a class="nav-pill ${activePage==='g3'?'active':''}" href="group3-demo.html"><i class="fa-solid fa-trophy"></i>Advanced</a>
     <a class="nav-pill ${activePage==='survey'?'active':''}" href="post-survey-demo.html"><i class="fa-solid fa-clipboard-list"></i>사후 설문</a>
     <a class="nav-pill ${activePage==='finish'?'active':''}" href="finish-demo.html"><i class="fa-solid fa-flag-checkered"></i>종료</a>
     <button onclick="revokeReviewAccess();window.location.href='password.html'" class="nav-pill"><i class="fa-solid fa-right-from-bracket"></i>잠금</button>

@@ -1,41 +1,143 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
-<script src="auth.js" defer></script><script src="common.js" defer></script>
-<title>Group 2 Demo</title></head><body class="min-h-screen p-4 md:p-6"><div class="max-w-7xl mx-auto"><div id="top-nav"></div>
-<header class="soft-card-lg p-7 mb-6"><span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold inline-block">Group 2 (Context)</span><h1 class="text-3xl font-bold text-slate-800 mt-3">블록 조립 + AI 가이드 조건</h1><p class="text-slate-500 mt-2">참여자는 주제·대상·분위기·세부 요소와 같은 블록을 선택하며 프롬프트 구성 요소를 조합합니다. 이후 AI가 제안한 문장을 따라 입력하면서 프롬프트 구조를 익히도록 설계되었습니다.</p></header>
-<div class="grid lg:grid-cols-2 gap-6">
-<section class="soft-card p-6">
-  <h2 class="text-xl font-bold text-slate-800 mb-4"><i class="fa-solid fa-cubes-stacked mr-2 text-blue-600"></i>실험 화면 개요</h2>
-  <div class="preview-frame mb-4"><img src="img/group2.png" alt="Group 2 UI"></div>
-  <p class="text-sm text-slate-500 mb-4">왼쪽 블록 조합 → 오른쪽 AI 제안 문장 → 이를 바탕으로 프롬프트를 수정하고 이미지 생성까지 이어지는 구조입니다.</p>
-  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4"><div class="font-bold text-slate-700 text-sm mb-3">목표 이미지 예시</div><div class="preview-frame"><img src="img/2.png" alt="Target"></div></div>
-  <div class="space-y-4">
-    <div><div class="font-bold text-slate-700 mb-2">주제 / 대상</div><div id="topicChips" class="flex flex-wrap gap-2"></div></div>
-    <div><div class="font-bold text-slate-700 mb-2">세부 요소</div><div id="detailChips" class="flex flex-wrap gap-2"></div></div>
-    <div><div class="font-bold text-slate-700 mb-2">분위기 / 조명</div><div id="moodChips" class="flex flex-wrap gap-2"></div></div>
-    <div><div class="font-bold text-slate-700 mb-2">구도 / 스타일</div><div id="styleChips" class="flex flex-wrap gap-2"></div></div>
+<link rel="stylesheet" href="styles.css"/>
+<script src="auth.js" defer></script>
+<script src="common.js" defer></script>
+<title>Group 2 Context Demo</title>
+</head>
+<body class="bg-slate-50 min-h-screen">
+<div class="exp-shell">
+  <div id="top-nav"></div>
+  <header class="text-center mb-6">
+    <span class="group-badge bg-blue-100 text-blue-700">🧩 Group 2 : 맥락 기반 AI 가이드</span>
+    <h1 class="exp-title mt-3">🎬 내 책상 위의 미니어처 공원 만들기</h1>
+    <p class="exp-sub">블록을 선택하면 프롬프트 구성 요소가 조립되고, AI 문장을 따라 입력하며 구조를 익힙니다.</p>
+  </header>
+
+  <div class="reviewer-mini mb-5">
+    <strong>심사위원 확인 포인트</strong> · Context 조건에서는 블록 선택이 프롬프트 문장으로 연결되고, 학습자가 오른쪽 Shadowing 영역에 직접 타이핑하면서 프롬프트 구조를 학습하도록 설계했습니다.
   </div>
-</section>
-<section class="soft-card p-6 flex flex-col">
-  <h2 class="text-xl font-bold text-slate-800 mb-3"><i class="fa-solid fa-robot mr-2 text-blue-600"></i>AI 예시 → 프롬프트 → 이미지 생성</h2>
-  <div class="info-callout text-sm mb-4">OpenAI가 선택된 블록을 바탕으로 자연스러운 한국어 프롬프트 예시와 짧은 피드백을 생성합니다.</div>
-  <button id="g2GuideBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3 rounded-xl shadow-md self-start">AI 예시 확인하기</button>
-  <div class="mt-5"><label class="block font-bold text-slate-700 mb-2">AI 제안 프롬프트</label><textarea id="g2Prompt" class="w-full p-4 border rounded-2xl bg-slate-50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none min-h-[170px]" placeholder="AI 제안 문장이 여기에 표시됩니다. 필요 시 직접 수정할 수 있습니다."></textarea></div>
-  <div class="mt-4"><div class="font-bold text-slate-700 mb-2">AI 피드백</div><div id="g2Guide" class="result-box text-slate-400 text-sm">아직 생성되지 않았습니다.</div></div>
-  <div class="mt-4 mb-4"><button id="g2GenerateBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3 rounded-xl shadow-md">이미지 생성하기</button></div>
-  <div><div class="font-bold text-slate-700 mb-2">생성 결과</div><div id="g2Image" class="image-box text-slate-400 text-sm">생성된 이미지가 여기에 표시됩니다.</div></div>
-</section></div>
-<div class="mt-6 flex gap-3 flex-wrap"><a href="group3-demo.html" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-5 py-3 rounded-xl shadow-sm">다음 그룹 보기</a><a href="finish-demo.html" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-5 py-3 rounded-xl shadow-md">종료 화면 보기</a></div>
+
+  <main class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+    <section class="space-y-5">
+      <div class="soft-card p-5">
+        <h2 class="font-bold text-slate-700 mb-3"><i class="fa-solid fa-video text-blue-500 mr-2"></i>1단계: 학습 영상 시청</h2>
+        <div class="video-card aspect-video bg-black rounded-xl overflow-hidden shadow-lg">
+          <iframe src="https://www.youtube.com/embed/E2jrCXSicdY?si=2dMN3FAPDDZD1PjU" title="가이드 영상" allowfullscreen></iframe>
+        </div>
+        <button id="g2VideoDone" class="mt-3 w-full text-blue-600 font-bold text-sm bg-blue-50 py-3 rounded-xl hover:bg-blue-100 transition">
+          <i class="fa-regular fa-circle-check mr-1"></i> 영상 시청을 완료했습니다
+        </button>
+      </div>
+
+      <div class="soft-card p-5 border-l-4 border-orange-400">
+        <h2 class="font-bold text-slate-700 mb-3"><i class="fa-solid fa-bullseye text-orange-500 mr-2"></i>2단계: 만들 이미지 선택</h2>
+        <div class="grid grid-cols-3 gap-3" id="targetCards"></div>
+      </div>
+
+      <div class="soft-card p-5 border-l-4 border-blue-500">
+        <h2 class="font-bold text-blue-700 mb-3"><i class="fa-solid fa-puzzle-piece mr-2"></i>3단계: 블록 조립 및 문장화</h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-4" id="blockGrid"></div>
+        <div class="train-track mb-3" id="trainTrack"><div class="train-engine">🚆</div></div>
+        <div class="text-sm text-slate-500 mb-4">현재 조합: <span id="comboText">아직 선택된 블록이 없습니다.</span></div>
+        <div class="flex gap-3">
+          <button id="resetBlocks" class="bg-white border border-slate-200 text-slate-600 font-bold px-4 py-3 rounded-xl">초기화</button>
+          <button id="buildPrompt" class="flex-1 bg-violet-600 hover:bg-violet-700 text-white font-bold px-4 py-3 rounded-xl shadow-md">📜 프롬프트 예시 확인하기</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="soft-card p-5 border-l-4 border-green-500">
+      <h2 class="font-bold text-green-700 mb-4"><i class="fa-solid fa-image mr-2"></i>프롬프트 학습 및 생성</h2>
+      <div class="bg-slate-50 p-4 rounded-2xl border mb-4">
+        <div class="font-bold text-slate-600 text-sm mb-2">내가 선택한 블록 조합</div>
+        <div id="selectedBlockPills" class="flex flex-wrap gap-2 text-sm text-slate-500">선택된 블록이 여기에 표시됩니다.</div>
+      </div>
+      <div class="bg-blue-50 p-4 rounded-2xl border border-blue-100 mb-4">
+        <div class="font-bold text-blue-700 text-sm mb-2"><i class="fa-solid fa-robot mr-1"></i>AI가 제안하는 프롬프트 예시</div>
+        <div id="aiPrompt" class="bg-white rounded-xl p-4 min-h-[88px] text-slate-600 text-sm">블록을 선택한 뒤 [프롬프트 예시 확인하기]를 눌러주세요.</div>
+      </div>
+      <div class="shadowing-box mb-4">
+        <label class="block font-bold text-slate-700 text-sm mb-2">✍️ 위 텍스트를 직접 타이핑해보세요 (Shadowing)</label>
+        <textarea id="shadowPrompt" class="w-full min-h-[120px] p-4 border rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none" placeholder="AI 제안 문장을 보고 직접 입력해 보세요."></textarea>
+        <div class="mt-3">
+          <div class="flex justify-between text-xs text-slate-500 mb-1"><span>문장 입력 일치도</span><span id="simText">0%</span></div>
+          <div class="similarity-bar"><div class="similarity-fill" id="simFill"></div></div>
+        </div>
+      </div>
+      <button id="g2Generate" class="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white font-bold py-4 rounded-xl shadow-md mb-4">✨ AI 이미지 생성하기</button>
+      <div id="g2ImageResult" class="image-box text-slate-400 text-sm">생성된 이미지가 여기에 표시됩니다.</div>
+    </section>
+  </main>
 </div>
+
 <script>
-document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('g2');});
-const sets={topic:['작은 공원','놀이공원','연못이 있는 정원','책상 위 미니 도시','작은 마을 풍경'],detail:['그네','미니어처 사람 인형','벤치','나무와 꽃','시계','책과 확대경','아이스크림 트럭'],mood:['따뜻한 햇살','저녁 조명','동화 같은 분위기','잔잔하고 평화로운 느낌','반짝이는 조명'],style:['상단 사선 구도','클로즈업 구도','미니어처 디오라마','고해상도 디테일','시네마틱 라이팅']};
-const selected={topic:new Set(),detail:new Set(),mood:new Set(),style:new Set()};
-function renderChips(containerId,key){const el=document.getElementById(containerId);sets[key].forEach(item=>{const btn=document.createElement('button');btn.type='button';btn.className='chip';btn.textContent=item;btn.addEventListener('click',()=>{if(selected[key].has(item)){selected[key].delete(item);btn.classList.remove('selected')}else{selected[key].add(item);btn.classList.add('selected')}});el.appendChild(btn);});}
-renderChips('topicChips','topic');renderChips('detailChips','detail');renderChips('moodChips','mood');renderChips('styleChips','style');
-document.getElementById('g2GuideBtn').addEventListener('click', async (e) => {const blocks=Object.fromEntries(Object.entries(selected).map(([k,v])=>[k,[...v]]));const total=Object.values(blocks).reduce((a,b)=>a+b.length,0);if(!total){alert('블록을 1개 이상 선택해 주세요.');return;}setLoading(e.currentTarget,true,'AI 예시 생성 중...');try{const data=await postJSON('/api/guide',{mode:'group2_prompt',blocks,targetScene:'블록 조합 기반 미니어처 장면'});document.getElementById('g2Prompt').value=data.polishedPrompt||'';setText('g2Guide',`<strong>선택 블록 조합 평가</strong><br>${(data.feedback||'').split('\\n').join('<br>')}`);}catch(err){setText('g2Guide',`<span class="text-red-700">${err.message}</span>`);}finally{setLoading(e.currentTarget,false);}});
-document.getElementById('g2GenerateBtn').addEventListener('click', async (e) => {const prompt=document.getElementById('g2Prompt').value.trim();if(!prompt){alert('먼저 AI 예시를 생성하거나 직접 프롬프트를 입력해 주세요.');return;}setLoading(e.currentTarget,true,'이미지 생성 중...');try{const finalPrompt=`미니어처 디오라마 스타일. ${prompt}. 섬세한 디테일, 현실감 있는 small scale scene, rich composition, clean focus.`;const data=await postJSON('/api/generate-image',{prompt:finalPrompt,group:'group2'});updateImage('g2Image',data.imageDataUrl);}catch(err){setText('g2Guide',`<span class="text-red-700">${err.message}</span>`);}finally{setLoading(e.currentTarget,false);}});
-</script></body></html>
+const targets={park:{title:'공원',img:'img/1.png'},amusement:{title:'놀이공원',img:'img/2.png'},desk:{title:'데스크 숲',img:'img/3.png'}};
+const blocks=[
+  {cat:'대상',emoji:'🌳',label:'작은 공원'},{cat:'대상',emoji:'🏘️',label:'마을 풍경'},{cat:'대상',emoji:'🎠',label:'놀이공원'},
+  {cat:'소품',emoji:'👤',label:'사람 인형'},{cat:'소품',emoji:'🚗',label:'미니카'},{cat:'소품',emoji:'⛲',label:'분수'},
+  {cat:'조명',emoji:'☀️',label:'햇빛'},{cat:'조명',emoji:'🌙',label:'은은한 조명'},{cat:'구도',emoji:'📐',label:'위에서'},{cat:'스타일',emoji:'🖼️',label:'미니어처 디오라마'}
+];
+let selectedTarget='park'; let selectedBlocks=[]; let currentPrompt='';
+function renderTargets(){
+  const wrap=document.getElementById('targetCards');
+  wrap.innerHTML=Object.entries(targets).map(([k,t])=>'<button type="button" class="task-card '+(k===selectedTarget?'active':'')+'" data-key="'+k+'"><img src="'+t.img+'" class="w-full h-24 object-cover"><div class="text-center py-2 font-bold text-sm text-slate-700">'+t.title+'</div></button>').join('');
+  wrap.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{selectedTarget=btn.dataset.key;renderTargets();}));
+}
+function renderBlocks(){
+  const grid=document.getElementById('blockGrid');
+  grid.innerHTML=blocks.map((b,i)=>'<button type="button" class="block-btn '+(selectedBlocks.includes(i)?'selected':'')+'" data-i="'+i+'"><span class="text-xl">'+b.emoji+'</span><span>'+b.label+'</span></button>').join('');
+  grid.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>toggleBlock(Number(btn.dataset.i))));
+  updateTrain();
+}
+function toggleBlock(i){ selectedBlocks.includes(i)? selectedBlocks=selectedBlocks.filter(x=>x!==i): selectedBlocks.push(i); renderBlocks(); }
+function updateTrain(){
+  const selected=selectedBlocks.map(i=>blocks[i]);
+  document.getElementById('trainTrack').innerHTML='<div class="train-engine">🚆</div>'+selected.map(b=>'<div class="train-car">'+b.emoji+'<br>'+b.label+'</div>').join('');
+  document.getElementById('comboText').textContent=selected.length? selected.map(b=>b.label).join(' + ') : '아직 선택된 블록이 없습니다.';
+  document.getElementById('selectedBlockPills').innerHTML=selected.length? selected.map(b=>'<span class="bg-white border px-3 py-1 rounded-full">'+b.emoji+' '+b.label+'</span>').join('') : '선택된 블록이 여기에 표시됩니다.';
+}
+function updateSimilarity(){
+  const typed=document.getElementById('shadowPrompt').value.trim();
+  if(!currentPrompt){document.getElementById('simText').textContent='0%';document.getElementById('simFill').style.width='0%';return;}
+  const a=typed.replaceAll(' ',''); const b=currentPrompt.replaceAll(' ','');
+  let same=0; for(let i=0;i<Math.min(a.length,b.length);i++){ if(a[i]===b[i]) same++; }
+  const pct=Math.min(100, Math.round((same/Math.max(1,b.length))*100));
+  document.getElementById('simText').textContent=pct+'%'; document.getElementById('simFill').style.width=pct+'%';
+}
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('g2');renderTargets();renderBlocks();});
+document.getElementById('shadowPrompt').addEventListener('input',updateSimilarity);
+document.getElementById('g2VideoDone').addEventListener('click',e=>{e.currentTarget.innerHTML='<i class="fa-solid fa-check mr-1"></i> 영상 시청을 완료했습니다';e.currentTarget.className='mt-3 w-full text-green-700 font-bold text-sm bg-green-50 py-3 rounded-xl';});
+document.getElementById('resetBlocks').addEventListener('click',()=>{selectedBlocks=[];currentPrompt='';renderBlocks();document.getElementById('aiPrompt').textContent='블록을 선택한 뒤 [프롬프트 예시 확인하기]를 눌러주세요.';document.getElementById('shadowPrompt').value='';updateSimilarity();});
+document.getElementById('buildPrompt').addEventListener('click',async(e)=>{
+  if(!selectedBlocks.length){alert('블록을 1개 이상 선택해 주세요.');return;}
+  setLoading(e.currentTarget,true,'AI 예시 생성 중...');
+  try{
+    const blockPayload=selectedBlocks.map(i=>blocks[i]);
+    const data=await postJSON('/api/guide',{mode:'group2_prompt',blocks:blockPayload,targetScene:targets[selectedTarget].title});
+    currentPrompt=data.polishedPrompt || blockPayload.map(b=>b.label).join(', ')+'를 포함한 미니어처 디오라마입니다.';
+    document.getElementById('aiPrompt').textContent=currentPrompt;
+    document.getElementById('shadowPrompt').value='';
+    updateSimilarity();
+  }catch(err){document.getElementById('aiPrompt').innerHTML='<span class="text-red-700">'+err.message+'</span>';}
+  finally{setLoading(e.currentTarget,false);}
+});
+document.getElementById('g2Generate').addEventListener('click',async(e)=>{
+  const prompt=document.getElementById('shadowPrompt').value.trim();
+  if(!prompt){alert('위 문장을 직접 타이핑하거나 나만의 문장으로 입력해 주세요.');return;}
+  setLoading(e.currentTarget,true,'이미지 생성 중...');
+  try{
+    const finalPrompt='Miniature diorama on a desk. Target scene: '+targets[selectedTarget].title+'. Prompt: '+prompt+'. detailed, coherent, charming, soft lighting.';
+    const data=await postJSON('/api/generate-image',{prompt:finalPrompt,group:'group2'});
+    updateImage('g2ImageResult',data.imageDataUrl);
+  }catch(err){alert(err.message);}
+  finally{setLoading(e.currentTarget,false);}
+});
+</script>
+</body></html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css"/>
+<script src="auth.js" defer></script>
+<script src="common.js" defer></script>
+<title>사전 설문 구성 확인</title>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-6">
+<div class="max-w-5xl mx-auto">
+  <div id="top-nav"></div>
+  <header class="soft-card-lg p-7 mb-6">
+    <span class="group-badge bg-blue-100 text-blue-700">Pre Survey Demo</span>
+    <h1 class="text-3xl font-bold text-slate-800 mt-3">사전 설문 및 학습 안내 구성</h1>
+    <p class="text-slate-500 mt-2">실제 참여자는 실험 전 연구 안내와 사전 설문을 완료한 뒤 조건별 실험 페이지로 이동했습니다. 심사용 데모에서는 문항 구성을 확인하는 방식으로 제시합니다.</p>
+  </header>
+  <div class="space-y-4">
+    <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">0. 연구 참여 동의 및 안내</h2><p class="text-sm text-slate-600">연구 목적, 개인정보 보호, 자발적 참여 동의, 문의처를 안내하고 동의 후 설문을 시작합니다.</p></section>
+    <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">1. 학습자 기본 정보</h2><p class="text-sm text-slate-600">식별 ID, 연령대, 성별, 최종 학력, 현재 직업 등을 확인합니다.</p></section>
+    <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">2. AI 이미지 생성 경험</h2><p class="text-sm text-slate-600">AI 이미지 생성 도구 사용 빈도와 사용해 본 도구를 확인하여 학습자 수준을 파악합니다.</p></section>
+    <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">3. 디지털 활용 경험</h2><p class="text-sm text-slate-600">앱 설치, 로그인, 문제 해결, 새로운 기능 시도 등 디지털 활용 자신감을 확인합니다.</p></section>
+    <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">4. AI 이미지 제작 용어 이해도</h2><p class="text-sm text-slate-600">프롬프트, 해상도, 스타일 등 기본 용어를 간단한 퀴즈와 해설로 학습합니다.</p></section>
+    <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">5. PECS 및 AI 활용 자신감 사전 문항</h2><p class="text-sm text-slate-600">프롬프트 작성 역량과 AI 이미지 생성 자기효능감을 7점 척도로 측정합니다.</p></section>
+  </div>
+  <div class="mt-6 flex gap-3 flex-wrap">
+    <a href="demo-flow.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-3 rounded-xl shadow-md">실험 흐름으로 이동</a>
+    <a href="group1-demo.html" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-5 py-3 rounded-xl shadow-sm">Control 화면 보기</a>
+  </div>
+</div>
+<script>document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('pre');});</script>
+</body></html>

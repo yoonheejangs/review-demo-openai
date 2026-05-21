@@ -1,17 +1,44 @@
-<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles.css" />
-<script src="auth.js" defer></script><script src="common.js" defer></script>
-<title>실험 흐름 요약</title></head><body class="min-h-screen p-4 md:p-6"><div class="max-w-6xl mx-auto"><div id="top-nav"></div>
-<header class="soft-card-lg p-7 mb-6"><span class="inline-block bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs font-bold">Demo Flow</span><h1 class="text-3xl font-bold text-slate-800 mt-3">실험 전체 흐름 요약</h1><p class="text-slate-500 mt-2">실제 본 실험은 사전 설문, 조건별 실험 과제, 사후 설문의 순서로 진행되었습니다. 아래 단계는 심사위원용 확인 흐름입니다.</p></header>
-<div class="space-y-4">
-  <div class="soft-card p-5 flex gap-4"><div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0">1</div><div><h2 class="font-bold text-slate-800">연구 안내 및 참여 동의</h2><p class="text-sm text-slate-500 mt-1">실제 참여자는 연구 목적과 절차를 확인한 뒤 동의 후 시작했습니다.</p></div></div>
-  <div class="soft-card p-5 flex gap-4"><div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0">2</div><div><h2 class="font-bold text-slate-800">사전 설문</h2><p class="text-sm text-slate-500 mt-1">기초 정보, 선행 경험, 프롬프트 역량, 자기효능감 등을 측정했습니다.</p></div></div>
-  <div class="soft-card p-5 flex gap-4"><div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0">3</div><div><h2 class="font-bold text-slate-800">조건별 실험 과제</h2><p class="text-sm text-slate-500 mt-1">Group 1: 자유 작성 / Group 2: 블록 기반 구조화 / Group 3: 심화 피드백 기반 도전</p></div></div>
-  <div class="soft-card p-5 flex gap-4"><div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0">4</div><div><h2 class="font-bold text-slate-800">이미지 생성 결과 확인</h2><p class="text-sm text-slate-500 mt-1">작성한 프롬프트를 바탕으로 이미지를 생성하고 결과를 살펴보았습니다.</p></div></div>
-  <div class="soft-card p-5 flex gap-4"><div class="w-11 h-11 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center shrink-0">5</div><div><h2 class="font-bold text-slate-800">사후 설문</h2><p class="text-sm text-slate-500 mt-1">프롬프트 제작 역량, 자기효능감, 만족도, 인지부하와 그룹별 경험 문항에 응답했습니다.</p></div></div>
+<link rel="stylesheet" href="styles.css"/>
+<script src="auth.js" defer></script>
+<script src="common.js" defer></script>
+<title>조건별 실험 흐름</title>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-6">
+<div class="max-w-7xl mx-auto">
+  <div id="top-nav"></div>
+  <header class="soft-card-lg p-7 mb-6">
+    <span class="group-badge bg-violet-100 text-violet-700">Experiment Flow</span>
+    <h1 class="text-3xl font-bold text-slate-800 mt-3">조건별 실험 화면 선택</h1>
+    <p class="text-slate-500 mt-2">심사위원께서는 아래 세 조건을 각각 눌러 실제 참여자가 경험한 처치의 차이를 확인하실 수 있습니다.</p>
+  </header>
+  <div class="grid lg:grid-cols-3 gap-5">
+    <a href="group1-demo.html" class="soft-card p-6 hover:shadow-lg transition">
+      <span class="group-badge bg-slate-200 text-slate-700">Control</span>
+      <h2 class="font-bold text-xl mt-4">기본 가이드 조건</h2>
+      <p class="text-sm text-slate-500 mt-2">학습 안내 영상을 본 뒤 목표 이미지를 선택하고 자유롭게 프롬프트를 작성합니다.</p>
+      <img src="img/group1.png" class="mt-4 rounded-xl border">
+    </a>
+    <a href="group2-demo.html" class="soft-card p-6 hover:shadow-lg transition">
+      <span class="group-badge bg-blue-100 text-blue-700">Context</span>
+      <h2 class="font-bold text-xl mt-4">블록 조립 조건</h2>
+      <p class="text-sm text-slate-500 mt-2">블록을 선택하면 문장 구조가 안내되고, 학습자는 이를 직접 타이핑하며 구조를 학습합니다.</p>
+      <img src="img/group2.png" class="mt-4 rounded-xl border">
+    </a>
+    <a href="group3-demo.html" class="soft-card p-6 hover:shadow-lg transition">
+      <span class="group-badge bg-green-100 text-green-700">Advanced</span>
+      <h2 class="font-bold text-xl mt-4">심화 도전 조건</h2>
+      <p class="text-sm text-slate-500 mt-2">초급·중급·고급 도전을 통해 이미지 프롬프트를 점차 정교화합니다.</p>
+      <img src="img/group3.png" class="mt-4 rounded-xl border">
+    </a>
+  </div>
 </div>
-<div class="mt-6 flex flex-wrap gap-3"><a href="group1-demo.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-3 rounded-xl shadow-md">Group 1 보기</a><a href="post-survey-demo.html" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-5 py-3 rounded-xl shadow-sm">사후 설문 보기</a></div>
-</div><script>document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('flow');});</script></body></html>
+<script>document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('flow');});</script>
+</body></html>
