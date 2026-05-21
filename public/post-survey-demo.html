@@ -1,0 +1,19 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<script src="auth.js" defer></script><script src="common.js" defer></script>
+<title>사후 설문 구성 확인</title></head><body class="min-h-screen p-4 md:p-6"><div class="max-w-6xl mx-auto"><div id="top-nav"></div>
+<header class="soft-card-lg p-7 mb-6"><span class="inline-block bg-violet-100 text-violet-700 px-3 py-1 rounded-full text-xs font-bold">Post Survey Structure</span><h1 class="text-3xl font-bold text-slate-800 mt-3">사후 설문 구성 확인용 페이지</h1><p class="text-slate-500 mt-2">이 페이지는 실제 참여자에게 제시된 사후 설문의 구조를 심사위원께서 확인하시기 위한 화면입니다. 입력·제출 기능은 비활성화되어 있습니다.</p></header>
+<div class="warn-callout mb-6 text-sm">실제 연구에서는 이 설문을 통해 <strong>PECS</strong>, <strong>디지털 용어 이해도</strong>, <strong>자기효능감</strong>, <strong>학습만족도</strong>, <strong>인지부하</strong>, <strong>그룹별 경험</strong>을 측정했습니다.</div>
+<div class="space-y-4">
+  <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">1. 프롬프트 제작 역량 (PECS)</h2><ul class="list-disc pl-5 text-sm text-slate-600 space-y-1"><li>원하는 이미지를 명확하게 설명할 수 있다.</li><li>구체적인 세부사항을 포함할 수 있다.</li><li>여러 요소를 논리적으로 조합할 수 있다.</li><li>생성된 결과를 보고 수정·개선할 수 있다.</li><li>시각적 구성 요소를 일관적으로 만들어 낼 수 있다.</li></ul></section>
+  <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">2. 디지털 용어 이해도</h2><ul class="list-disc pl-5 text-sm text-slate-600 space-y-1"><li>프롬프트, 해상도, 스타일 등 핵심 용어에 대한 객관식 문항</li><li>AI 이미지 생성 관련 개념 이해 정도 확인</li></ul></section>
+  <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">3. AI 활용 자기효능감</h2><ul class="list-disc pl-5 text-sm text-slate-600 space-y-1"><li>AI 이미지 생성 도구를 잘 사용할 수 있다는 확신</li><li>다른 사람의 도움 없이도 사용할 수 있다는 자신감</li><li>문제 상황에서 스스로 해결할 수 있는 믿음</li></ul></section>
+  <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">4. 학습 경험 만족도</h2><ul class="list-disc pl-5 text-sm text-slate-600 space-y-1"><li>이번 학습 방식의 유용성</li><li>향후 활용 자신감 증진 여부</li><li>전통적 방식 대비 효과성 인식</li></ul></section>
+  <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">5. 인지부하 및 학습 어려움</h2><ul class="list-disc pl-5 text-sm text-slate-600 space-y-1"><li>명령어 작성의 정신적 어려움</li><li>원하는 결과를 얻기 위한 노력 정도</li><li>좌절감 또는 답답함 경험 정도</li></ul></section>
+  <section class="soft-card p-6"><h2 class="font-bold text-blue-700 text-lg mb-2">6. 그룹별 경험 문항</h2><ul class="list-disc pl-5 text-sm text-slate-600 space-y-1"><li>Group 1: 자유 작성에서의 어려움과 필요 도움</li><li>Group 2: 블록 선택 방식과 AI 제안 기능의 도움 정도</li><li>Group 3: 전문가 비교·점수 피드백·레벨 시스템 효과</li></ul></section>
+</div>
+<div class="mt-6"><a href="finish-demo.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-3 rounded-xl shadow-md">종료 화면 보기</a></div>
+</div><script>document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('survey');});</script></body></html>

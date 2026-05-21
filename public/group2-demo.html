@@ -1,0 +1,42 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<script src="auth.js" defer></script><script src="common.js" defer></script>
+<title>Group 2 Demo</title></head><body class="min-h-screen p-4 md:p-6"><div class="max-w-7xl mx-auto"><div id="top-nav"></div>
+<header class="soft-card-lg p-7 mb-6"><span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs font-bold inline-block">Group 2 (Context)</span><h1 class="text-3xl font-bold text-slate-800 mt-3">블록 조립 + AI 가이드 조건</h1><p class="text-slate-500 mt-2">참여자는 주제·대상·분위기·세부 요소와 같은 블록을 선택하며 프롬프트 구성 요소를 조합합니다. 이후 AI가 제안한 문장을 따라 입력하면서 프롬프트 구조를 익히도록 설계되었습니다.</p></header>
+<div class="grid lg:grid-cols-2 gap-6">
+<section class="soft-card p-6">
+  <h2 class="text-xl font-bold text-slate-800 mb-4"><i class="fa-solid fa-cubes-stacked mr-2 text-blue-600"></i>실험 화면 개요</h2>
+  <div class="preview-frame mb-4"><img src="img/group2.png" alt="Group 2 UI"></div>
+  <p class="text-sm text-slate-500 mb-4">왼쪽 블록 조합 → 오른쪽 AI 제안 문장 → 이를 바탕으로 프롬프트를 수정하고 이미지 생성까지 이어지는 구조입니다.</p>
+  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 mb-4"><div class="font-bold text-slate-700 text-sm mb-3">목표 이미지 예시</div><div class="preview-frame"><img src="img/2.png" alt="Target"></div></div>
+  <div class="space-y-4">
+    <div><div class="font-bold text-slate-700 mb-2">주제 / 대상</div><div id="topicChips" class="flex flex-wrap gap-2"></div></div>
+    <div><div class="font-bold text-slate-700 mb-2">세부 요소</div><div id="detailChips" class="flex flex-wrap gap-2"></div></div>
+    <div><div class="font-bold text-slate-700 mb-2">분위기 / 조명</div><div id="moodChips" class="flex flex-wrap gap-2"></div></div>
+    <div><div class="font-bold text-slate-700 mb-2">구도 / 스타일</div><div id="styleChips" class="flex flex-wrap gap-2"></div></div>
+  </div>
+</section>
+<section class="soft-card p-6 flex flex-col">
+  <h2 class="text-xl font-bold text-slate-800 mb-3"><i class="fa-solid fa-robot mr-2 text-blue-600"></i>AI 예시 → 프롬프트 → 이미지 생성</h2>
+  <div class="info-callout text-sm mb-4">OpenAI가 선택된 블록을 바탕으로 자연스러운 한국어 프롬프트 예시와 짧은 피드백을 생성합니다.</div>
+  <button id="g2GuideBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3 rounded-xl shadow-md self-start">AI 예시 확인하기</button>
+  <div class="mt-5"><label class="block font-bold text-slate-700 mb-2">AI 제안 프롬프트</label><textarea id="g2Prompt" class="w-full p-4 border rounded-2xl bg-slate-50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none min-h-[170px]" placeholder="AI 제안 문장이 여기에 표시됩니다. 필요 시 직접 수정할 수 있습니다."></textarea></div>
+  <div class="mt-4"><div class="font-bold text-slate-700 mb-2">AI 피드백</div><div id="g2Guide" class="result-box text-slate-400 text-sm">아직 생성되지 않았습니다.</div></div>
+  <div class="mt-4 mb-4"><button id="g2GenerateBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3 rounded-xl shadow-md">이미지 생성하기</button></div>
+  <div><div class="font-bold text-slate-700 mb-2">생성 결과</div><div id="g2Image" class="image-box text-slate-400 text-sm">생성된 이미지가 여기에 표시됩니다.</div></div>
+</section></div>
+<div class="mt-6 flex gap-3 flex-wrap"><a href="group3-demo.html" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-5 py-3 rounded-xl shadow-sm">다음 그룹 보기</a><a href="finish-demo.html" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-5 py-3 rounded-xl shadow-md">종료 화면 보기</a></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('g2');});
+const sets={topic:['작은 공원','놀이공원','연못이 있는 정원','책상 위 미니 도시','작은 마을 풍경'],detail:['그네','미니어처 사람 인형','벤치','나무와 꽃','시계','책과 확대경','아이스크림 트럭'],mood:['따뜻한 햇살','저녁 조명','동화 같은 분위기','잔잔하고 평화로운 느낌','반짝이는 조명'],style:['상단 사선 구도','클로즈업 구도','미니어처 디오라마','고해상도 디테일','시네마틱 라이팅']};
+const selected={topic:new Set(),detail:new Set(),mood:new Set(),style:new Set()};
+function renderChips(containerId,key){const el=document.getElementById(containerId);sets[key].forEach(item=>{const btn=document.createElement('button');btn.type='button';btn.className='chip';btn.textContent=item;btn.addEventListener('click',()=>{if(selected[key].has(item)){selected[key].delete(item);btn.classList.remove('selected')}else{selected[key].add(item);btn.classList.add('selected')}});el.appendChild(btn);});}
+renderChips('topicChips','topic');renderChips('detailChips','detail');renderChips('moodChips','mood');renderChips('styleChips','style');
+document.getElementById('g2GuideBtn').addEventListener('click', async (e) => {const blocks=Object.fromEntries(Object.entries(selected).map(([k,v])=>[k,[...v]]));const total=Object.values(blocks).reduce((a,b)=>a+b.length,0);if(!total){alert('블록을 1개 이상 선택해 주세요.');return;}setLoading(e.currentTarget,true,'AI 예시 생성 중...');try{const data=await postJSON('/api/guide',{mode:'group2_prompt',blocks,targetScene:'블록 조합 기반 미니어처 장면'});document.getElementById('g2Prompt').value=data.polishedPrompt||'';setText('g2Guide',`<strong>선택 블록 조합 평가</strong><br>${(data.feedback||'').replace(/
+/g,'<br>')}`);}catch(err){setText('g2Guide',`<span class="text-red-700">${err.message}</span>`);}finally{setLoading(e.currentTarget,false);}});
+document.getElementById('g2GenerateBtn').addEventListener('click', async (e) => {const prompt=document.getElementById('g2Prompt').value.trim();if(!prompt){alert('먼저 AI 예시를 생성하거나 직접 프롬프트를 입력해 주세요.');return;}setLoading(e.currentTarget,true,'이미지 생성 중...');try{const finalPrompt=`미니어처 디오라마 스타일. ${prompt}. 섬세한 디테일, 현실감 있는 small scale scene, rich composition, clean focus.`;const data=await postJSON('/api/generate-image',{prompt:finalPrompt,group:'group2'});updateImage('g2Image',data.imageDataUrl);}catch(err){setText('g2Guide',`<span class="text-red-700">${err.message}</span>`);}finally{setLoading(e.currentTarget,false);}});
+</script></body></html>

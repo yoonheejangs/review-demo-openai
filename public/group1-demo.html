@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="ko"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+<script src="auth.js" defer></script><script src="common.js" defer></script>
+<title>Group 1 Demo</title></head><body class="min-h-screen p-4 md:p-6"><div class="max-w-7xl mx-auto"><div id="top-nav"></div>
+<header class="soft-card-lg p-7 mb-6"><span class="bg-slate-700 text-white px-3 py-1 rounded-full text-xs font-bold inline-block">Group 1 (Control)</span><h1 class="text-3xl font-bold text-slate-800 mt-3">기본 가이드 + 자유 작성 조건</h1><p class="text-slate-500 mt-2">참여자는 가이드 영상을 시청한 뒤, 목표 이미지를 선택하고 자유롭게 프롬프트를 작성합니다. 별도의 구조화 도구나 피드백은 제공되지 않습니다. 다만 심사용 데모에서는 이해를 돕기 위해 <strong>선택형 힌트</strong>를 추가로 열어두었습니다.</p></header>
+<div class="grid lg:grid-cols-2 gap-6">
+  <section class="soft-card p-6">
+    <h2 class="text-xl font-bold text-slate-800 mb-4"><i class="fa-solid fa-desktop mr-2 text-blue-600"></i>실험 화면 개요</h2>
+    <div class="preview-frame mb-4"><img src="img/group1.png" alt="Group 1 UI"></div>
+    <p class="text-sm text-slate-500 mb-4">왼쪽의 가이드 영상과 목표 이미지를 참고한 뒤, 오른쪽 입력창에 자유롭게 프롬프트를 작성하는 구조입니다.</p>
+    <div class="grid sm:grid-cols-3 gap-3 mb-4">
+      <div class="dash-box p-4"><div class="font-bold text-slate-800 text-sm">목표</div><p class="text-xs text-slate-500 mt-1">자유 입력을 통한 프롬프트 작성</p></div>
+      <div class="dash-box p-4"><div class="font-bold text-slate-800 text-sm">지원</div><p class="text-xs text-slate-500 mt-1">기본 가이드 영상 제공</p></div>
+      <div class="dash-box p-4"><div class="font-bold text-slate-800 text-sm">심사용 체험</div><p class="text-xs text-slate-500 mt-1">OpenAI 이미지 생성 가능</p></div>
+    </div>
+    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4">
+      <div class="font-bold text-slate-700 text-sm mb-3">목표 이미지 예시</div>
+      <div class="preview-frame"><img src="img/1.png" alt="Target"></div>
+    </div>
+  </section>
+  <section class="soft-card p-6 flex flex-col">
+    <h2 class="text-xl font-bold text-slate-800 mb-3"><i class="fa-solid fa-wand-magic-sparkles mr-2 text-blue-600"></i>심사용 OpenAI 체험</h2>
+    <div class="info-callout text-sm mb-4">이 기능은 연구 원자료와 분리된 심사용 체험용 기능입니다. 입력 내용은 저장되지 않습니다.</div>
+    <label class="block font-bold text-slate-700 mb-2">프롬프트 자유 작성</label>
+    <textarea id="g1Prompt" class="w-full p-4 border rounded-2xl bg-slate-50 focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none min-h-[180px]" placeholder="예: 햇살이 비치는 창가의 책상 위에 미니어처 공원이 놓여 있고, 작은 나무와 놀이터, 사람 인형들이 따뜻한 분위기를 이루는 장면"></textarea>
+    <p class="text-xs text-slate-400 mt-2">권장: 대상, 세부요소, 조명, 분위기, 구도 등을 포함해 보세요.</p>
+    <div class="flex flex-wrap gap-3 mt-4 mb-4">
+      <button id="g1HintBtn" class="bg-white border border-blue-200 text-blue-700 font-bold px-4 py-3 rounded-xl shadow-sm hover:bg-blue-50">초보자 힌트 받기</button>
+      <button id="g1GenerateBtn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold px-4 py-3 rounded-xl shadow-md">이미지 생성하기</button>
+    </div>
+    <div class="mb-4"><div class="font-bold text-slate-700 mb-2">AI 힌트</div><div id="g1Guide" class="result-box text-slate-400 text-sm">아직 힌트를 요청하지 않았습니다.</div></div>
+    <div><div class="font-bold text-slate-700 mb-2">생성 결과</div><div id="g1Image" class="image-box text-slate-400 text-sm">생성된 이미지가 여기에 표시됩니다.</div></div>
+  </section>
+</div>
+<div class="mt-6 flex gap-3 flex-wrap"><a href="group2-demo.html" class="bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 font-bold px-5 py-3 rounded-xl shadow-sm">다음 그룹 보기</a><a href="finish-demo.html" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-5 py-3 rounded-xl shadow-md">종료 화면 보기</a></div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('g1');});
+document.getElementById('g1HintBtn').addEventListener('click', async (e) => {
+  const prompt = document.getElementById('g1Prompt').value.trim();
+  if (!prompt) { alert('먼저 프롬프트를 입력해 주세요.'); return; }
+  setLoading(e.currentTarget, true, '힌트 생성 중...');
+  try {
+    const data = await postJSON('/api/guide', { mode:'group1_hint', userPrompt: prompt, targetScene:'책상 위 미니어처 공원' });
+    setText('g1Guide', `<strong>보완 포인트</strong><br>${(data.feedback||'').replace(/
+/g,'<br>')}<br><br><strong>추천 문장 예시</strong><br>${data.suggestedPrompt||''}`);
+  } catch (err) { setText('g1Guide', `<span class="text-red-700">${err.message}</span>`); }
+  finally { setLoading(e.currentTarget, false); }
+});
+document.getElementById('g1GenerateBtn').addEventListener('click', async (e) => {
+  const prompt = document.getElementById('g1Prompt').value.trim();
+  if (!prompt) { alert('프롬프트를 입력해 주세요.'); return; }
+  setLoading(e.currentTarget, true, '이미지 생성 중...');
+  try {
+    const combinedPrompt = `미니어처 디오라마 스타일의 이미지. 장면: 책상 위에 놓인 작은 공원. 사용자 설명: ${prompt}. 따뜻한 자연광, 섬세한 디테일, 현실감 있는 miniature diorama, cinematic lighting.`;
+    const data = await postJSON('/api/generate-image', { prompt: combinedPrompt, group:'group1' });
+    updateImage('g1Image', data.imageDataUrl);
+    if (data.revisedPrompt) setText('g1Guide', `<strong>모델이 정리한 프롬프트</strong><br>${data.revisedPrompt}`);
+  } catch (err) { updateImage('g1Image',''); setText('g1Guide', `<span class="text-red-700">${err.message}</span>`); }
+  finally { setLoading(e.currentTarget, false); }
+});
+</script></body></html>
