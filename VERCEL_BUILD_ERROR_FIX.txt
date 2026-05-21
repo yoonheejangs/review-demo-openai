@@ -1,0 +1,22 @@
+Vercel Build Failed 수정 안내
+=============================
+
+오류:
+Function Runtimes must have a valid version, for example `now-php@1.0.0`.
+
+원인:
+이전 vercel.json에 functions.runtime 설정이 들어가 있었습니다.
+
+수정:
+1. vercel.json에서 functions.runtime 설정을 제거했습니다.
+2. Node 버전은 package.json의 engines로 지정했습니다.
+
+현재 vercel.json:
+{
+  "version": 2
+}
+
+GitHub 저장소에 이미 올린 상태라면:
+- vercel.json 내용을 위처럼 바꾸거나
+- 이 수정본 ZIP의 파일로 다시 업로드/교체하세요.
+- 수정 후 Vercel에서 Redeploy 하세요.

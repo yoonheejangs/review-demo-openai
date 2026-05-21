@@ -1,5 +1,5 @@
 
-const REVIEW_DEMO_PASSWORD = 'review2026';
+const REVIEW_DEMO_PASSWORD = 'review2026!';
 const REVIEW_DEMO_AUTH_KEY = 'reviewDemoAccessGranted';
 
 function isReviewAuthenticated() {
