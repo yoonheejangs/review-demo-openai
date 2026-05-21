@@ -45,8 +45,7 @@ document.getElementById('g1HintBtn').addEventListener('click', async (e) => {
   setLoading(e.currentTarget, true, '힌트 생성 중...');
   try {
     const data = await postJSON('/api/guide', { mode:'group1_hint', userPrompt: prompt, targetScene:'책상 위 미니어처 공원' });
-    setText('g1Guide', `<strong>보완 포인트</strong><br>${(data.feedback||'').replace(/
-/g,'<br>')}<br><br><strong>추천 문장 예시</strong><br>${data.suggestedPrompt||''}`);
+    setText('g1Guide', `<strong>보완 포인트</strong><br>${(data.feedback||'').split('\\n').join('<br>')}<br><br><strong>추천 문장 예시</strong><br>${data.suggestedPrompt||''}`);
   } catch (err) { setText('g1Guide', `<span class="text-red-700">${err.message}</span>`); }
   finally { setLoading(e.currentTarget, false); }
 });
