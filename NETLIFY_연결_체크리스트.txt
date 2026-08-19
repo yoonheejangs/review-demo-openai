@@ -1,0 +1,12 @@
+달토끼 Netlify 연결 체크리스트
+
+[ ] 1. Notion에서 Internal Connection '달토끼 웹사이트' 생성
+[ ] 2. 권한은 Read content
+[ ] 3. Integration Token 복사
+[ ] 4. Notion '🌙 달토끼 AI 연구소 CMS' 페이지 > Connections에 추가
+[ ] 5. Netlify Environment variables에 NOTION_TOKEN 등록
+[ ] 6. 사이트 새로 Deploy
+[ ] 7. /setup-check.html 접속
+[ ] 8. '연결 정상' 확인
+[ ] 9. Notion 콘텐츠 하나 수정
+[ ] 10. 약 1분 후 웹에서 변경 확인

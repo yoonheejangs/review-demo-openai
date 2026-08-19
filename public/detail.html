@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>달토끼 실험 기록</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .detail-main{padding:54px 0 82px}
+    .detail-hero{background:#fff;border:1px solid var(--line);border-radius:34px;padding:34px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+    .detail-hero:after{content:"?";position:absolute;right:20px;top:-62px;font-size:210px;font-weight:1000;color:#35291f0a;transform:rotate(8deg)}
+    .detail-hero h1{font-size:clamp(38px,6vw,64px);line-height:1.03;margin:18px 0 14px;max-width:850px}
+    .summary{font-size:18px;color:var(--muted);max-width:790px}
+    .detail-stamp{position:absolute;right:24px;bottom:20px;border:4px solid var(--red);color:var(--red);font-weight:1000;padding:8px 10px;border-radius:6px;transform:rotate(-7deg);background:#fff9}
+    .notion-body{margin-top:18px;background:#fff;border:1px solid var(--line);border-radius:30px;padding:30px;box-shadow:0 8px 24px rgba(53,41,31,.05)}
+    .notion-body h2,.notion-body h3,.notion-body h4,.notion-body h5{line-height:1.25;letter-spacing:-.04em;margin-top:1.6em}
+    .notion-body h2:first-child,.notion-body p:first-child{margin-top:0}
+    .notion-body p{margin:1em 0}.notion-body ul,.notion-body ol{padding-left:1.35em}
+    .notion-body blockquote{margin:1.2em 0;border-left:4px solid var(--yellow);padding:10px 16px;background:#fffaf0;border-radius:0 14px 14px 0}
+    .callout{display:flex;gap:10px;background:#fff4c9;border:1px dashed #c79f50;border-radius:18px;padding:14px 16px;margin:1em 0}
+    .todo{display:flex;gap:9px;align-items:flex-start;margin:.6em 0}.todo input{margin-top:.38em}
+    .code{background:#28231f;color:#f8efe7;padding:17px;border-radius:17px;overflow:auto}
+    .notion-img{display:block;max-width:100%;height:auto;border-radius:20px;margin:18px auto;box-shadow:0 8px 24px rgba(53,41,31,.08)}
+    .caption{font-size:11px;color:var(--muted);text-align:center;margin-top:-10px;margin-bottom:18px}
+    .bookmark{display:block;border:1px solid var(--line);border-radius:16px;padding:13px 15px;margin:12px 0;background:#fffaf5;font-weight:800;word-break:break-all}
+    .table-wrap{overflow:auto;margin:16px 0}.ntable{border-collapse:collapse;width:100%;min-width:520px}.ntable td{border:1px solid var(--line);padding:9px 10px;vertical-align:top}
+    .columns{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+    .toggle{border:1px dashed var(--line);border-radius:14px;padding:9px 12px;margin:9px 0}
+    .unsupported{font-size:11px;color:var(--muted);border:1px dashed var(--line);padding:8px 10px;border-radius:12px}
+    .sync-note{font-size:11px;color:var(--muted);margin-top:12px;text-align:right}
+    .detail-actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
+    @media(max-width:700px){.detail-hero{padding:25px}.detail-hero h1{font-size:41px}.detail-stamp{position:static;display:inline-block;margin-top:14px}.notion-body{padding:22px}.detail-actions{flex-direction:column}}
+  </style>
+</head>
+<body>
+<nav class="nav"><div class="wrap nav-in"><a class="brand" href="/"><i>🌙</i><span>달토끼 AI 연구소<small>AI를 이상하게 쓰는 연구소</small></span></a><a class="pill" href="/#lab">← 실험실로</a></div></nav>
+
+<main class="detail-main"><div class="wrap" id="app"><div class="loading">🐰 Notion 상세 연구노트를 가져오는 중…</div></div></main>
+
+<script>
+function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function safeUrl(u=""){try{const x=new URL(u);return ["http:","https:"].includes(x.protocol)?x.href:""}catch{return ""}}
+function rich(r=[]){
+  return r.map(x=>{
+    let t=escapeHtml(x.text||"");
+    if(x.code)t=`<code>${t}</code>`;
+    if(x.bold)t=`<strong>${t}</strong>`;
+    if(x.italic)t=`<em>${t}</em>`;
+    if(x.underline)t=`<u>${t}</u>`;
+    if(x.strike)t=`<s>${t}</s>`;
+    const href=safeUrl(x.href);
+    if(href)t=`<a href="${escapeHtml(href)}" target="_blank" rel="noopener">${t}</a>`;
+    return t;
+  }).join("");
+}
+function caption(c=[]){return c.length?`<div class="caption">${rich(c)}</div>`:""}
+
+function renderOne(b){
+  const child=b.children?.length?renderBlocks(b.children):"";
+  switch(b.type){
+    case"paragraph":return `<p>${rich(b.rich)}${child}</p>`;
+    case"heading_1":return `<h2>${rich(b.rich)}</h2>${child}`;
+    case"heading_2":return `<h3>${rich(b.rich)}</h3>${child}`;
+    case"heading_3":return `<h4>${rich(b.rich)}</h4>${child}`;
+    case"heading_4":return `<h5>${rich(b.rich)}</h5>${child}`;
+    case"quote":return `<blockquote>${rich(b.rich)}${child}</blockquote>`;
+    case"callout":return `<div class="callout"><span>${escapeHtml(b.icon||"🐰")}</span><div>${rich(b.rich)}${child}</div></div>`;
+    case"to_do":return `<div class="todo"><input type="checkbox" disabled ${b.checked?"checked":""}><div>${rich(b.rich)}${child}</div></div>`;
+    case"toggle":return `<details class="toggle"><summary>${rich(b.rich)}</summary>${child}</details>`;
+    case"divider":return `<hr>`;
+    case"code":return `<pre class="code"><code>${escapeHtml((b.rich||[]).map(x=>x.text||"").join(""))}</code></pre>${caption(b.caption)}`;
+    case"image":{
+      const u=safeUrl(b.url); return u?`<img class="notion-img" src="${escapeHtml(u)}" alt="">${caption(b.caption)}`:"";
+    }
+    case"video":{
+      const u=safeUrl(b.url); if(!u)return"";
+      if(/youtube\.com|youtu\.be/.test(u))return `<a class="bookmark" href="${escapeHtml(u)}" target="_blank" rel="noopener">▶ 영상 보기: ${escapeHtml(u)}</a>`;
+      return `<video class="notion-img" controls src="${escapeHtml(u)}"></video>${caption(b.caption)}`;
+    }
+    case"audio":{
+      const u=safeUrl(b.url); return u?`<audio controls style="width:100%" src="${escapeHtml(u)}"></audio>${caption(b.caption)}`:"";
+    }
+    case"pdf":case"file":{
+      const u=safeUrl(b.url); return u?`<a class="bookmark" href="${escapeHtml(u)}" target="_blank" rel="noopener">📎 ${escapeHtml(b.name||"첨부파일 열기")}</a>`:"";
+    }
+    case"bookmark":case"embed":case"link_preview":{
+      const u=safeUrl(b.url); return u?`<a class="bookmark" href="${escapeHtml(u)}" target="_blank" rel="noopener">↗ ${escapeHtml(u)}</a>`:"";
+    }
+    case"equation":return `<div class="bookmark">${escapeHtml(b.expression||"")}</div>`;
+    case"table":{
+      const rows=(b.children||[]).filter(x=>x.type==="table_row");
+      return `<div class="table-wrap"><table class="ntable">${rows.map(r=>`<tr>${(r.cells||[]).map(c=>`<td>${rich(c)}</td>`).join("")}</tr>`).join("")}</table></div>`;
+    }
+    case"column_list":return `<div class="columns">${(b.children||[]).map(c=>`<div>${renderBlocks(c.children||[])}</div>`).join("")}</div>`;
+    case"column":return child;
+    case"child_page":return `<div class="bookmark">📄 ${escapeHtml(b.title||"하위 페이지")}</div>`;
+    case"child_database":return `<div class="bookmark">🗃 ${escapeHtml(b.title||"하위 데이터베이스")}</div>`;
+    case"unsupported":return `<div class="unsupported">Notion의 '${escapeHtml(b.unsupportedType||"지원되지 않는")}' 블록은 웹 표시를 생략했습니다.</div>`;
+    default:return child;
+  }
+}
+
+function renderBlocks(blocks=[]){
+  let html="";
+  for(let i=0;i<blocks.length;i++){
+    const b=blocks[i];
+    if(b.type==="bulleted_list_item"||b.type==="numbered_list_item"){
+      const type=b.type, tag=type==="bulleted_list_item"?"ul":"ol";
+      let items="";
+      while(i<blocks.length&&blocks[i].type===type){
+        const x=blocks[i];
+        items+=`<li>${rich(x.rich)}${x.children?.length?renderBlocks(x.children):""}</li>`;
+        i++;
+      }
+      i--;
+      html+=`<${tag}>${items}</${tag}>`;
+    }else html+=renderOne(b);
+  }
+  return html;
+}
+
+async function load(){
+  const app=document.getElementById("app");
+  const slug=new URLSearchParams(location.search).get("slug")||"";
+  if(!slug){app.innerHTML='<div class="errorbox"><strong>콘텐츠 주소가 없습니다.</strong><a class="btn" href="/">홈으로</a></div>';return}
+  try{
+    const res=await fetch(`/api/page?slug=${encodeURIComponent(slug)}`,{headers:{"accept":"application/json"}});
+    const data=await res.json();
+    if(!res.ok||!data.ok)throw new Error(data.message||"Notion 본문을 읽지 못했습니다.");
+    const x=data.item;
+    document.title=`${x.title} | 달토끼 AI 연구소`;
+    app.innerHTML=`
+      <section class="detail-hero">
+        <div class="meta"><span class="chip">${escapeHtml(x.id)}</span><span class="chip">${escapeHtml(x.type)}</span>${(x.tools||[]).map(t=>`<span class="chip tool">${escapeHtml(t)}</span>`).join("")}</div>
+        <h1>${escapeHtml(x.title)}</h1>
+        <p class="summary">${escapeHtml(x.summary||"")}</p>
+        ${x.rabbit?`<div class="rabbit-line">🐰 달토끼: “${escapeHtml(x.rabbit)}”</div>`:""}
+        ${x.badge&&x.badge!=="없음"?`<div class="detail-stamp">${escapeHtml(x.badge)}</div>`:""}
+      </section>
+      <article class="notion-body">
+        ${data.blocks?.length?renderBlocks(data.blocks):'<div class="loading">아직 Notion 본문이 없습니다. 해당 콘텐츠 페이지에 실험 기록을 작성해주세요.</div>'}
+        <div class="sync-note">Notion 최신 확인: ${escapeHtml(new Date(data.syncedAt).toLocaleString("ko-KR"))}</div>
+      </article>
+      <div class="detail-actions">
+        <a class="btn" href="/#lab">← 다른 실험 보기</a>
+        ${x.youtube?`<a class="btn dark" href="${escapeHtml(safeUrl(x.youtube))}" target="_blank" rel="noopener">YouTube 본편 보기 →</a>`:`<span class="btn dark">본편 준비 중 🐰</span>`}
+      </div>`;
+  }catch(err){
+    app.innerHTML=`<div class="errorbox"><strong>⚠ 상세페이지를 불러오지 못했습니다.</strong>${escapeHtml(err.message)}<br><br><a class="btn" href="/setup-check.html">연결 상태 확인 →</a></div>`;
+  }
+}
+load();
+</script>
+</body>
+</html>

@@ -1,65 +1,137 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-<link rel="stylesheet" href="styles.css"/>
-<script src="auth.js" defer></script>
-<script src="common.js" defer></script>
-<title>심사위원용 실험 데모</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="달토끼 AI 연구소 — AI를 이상하게 써보고 실제 결과를 기록합니다.">
+  <title>달토끼 AI 연구소</title>
+  <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="bg-slate-50 min-h-screen p-4 md:p-6">
-<div class="max-w-7xl mx-auto">
-  <div id="top-nav"></div>
-  <header class="soft-card-lg p-8 md:p-10 mb-6 bg-gradient-to-r from-slate-800 to-blue-900 text-white border-0">
-    <span class="inline-block bg-blue-500/30 text-blue-100 px-3 py-1 rounded-full text-xs font-bold">Reviewer Demo · Experimental UI</span>
-    <h1 class="text-3xl md:text-4xl font-bold mt-3">석사학위논문 심사용 실험 플랫폼 데모</h1>
-    <p class="text-blue-100 mt-3 leading-relaxed">본 데모는 실제 본실험의 구조인 <strong>사전 설문 → 조건별 실험 → 사후 설문</strong> 흐름을 심사위원께서 확인하실 수 있도록 재구성한 버전입니다. 입력 내용은 연구 원자료로 저장되지 않습니다.</p>
-  </header>
+<body>
+<nav class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><i>🌙</i><span>달토끼 AI 연구소<small>AI를 이상하게 쓰는 연구소</small></span></a>
+    <div class="links"><a href="#lab">실험실</a><a href="#today">오늘의 실험</a></div>
+    <a class="pill" href="/setup-check.html">연결 확인</a>
+  </div>
+</nav>
 
-  <section class="grid md:grid-cols-3 gap-5 mb-6">
-    <a href="pre-survey-demo.html" class="demo-flow-card hover:shadow-lg transition">
-      <div class="progress-dot bg-blue-100 text-blue-700 mb-4">1</div>
-      <h2 class="font-bold text-slate-800 text-xl mb-2">사전 설문</h2>
-      <p class="text-sm text-slate-500">기본 정보, AI 이미지 생성 경험, 디지털 활용 경험, PECS 및 자기효능감 사전 문항의 구성을 확인합니다.</p>
-    </a>
-    <a href="demo-flow.html" class="demo-flow-card hover:shadow-lg transition">
-      <div class="progress-dot bg-violet-100 text-violet-700 mb-4">2</div>
-      <h2 class="font-bold text-slate-800 text-xl mb-2">조건별 실험</h2>
-      <p class="text-sm text-slate-500">Control, Context, Advanced 조건에서 학습자가 어떤 UI와 처치를 경험했는지 체험합니다.</p>
-    </a>
-    <a href="post-survey-demo.html" class="demo-flow-card hover:shadow-lg transition">
-      <div class="progress-dot bg-green-100 text-green-700 mb-4">3</div>
-      <h2 class="font-bold text-slate-800 text-xl mb-2">사후 설문</h2>
-      <p class="text-sm text-slate-500">사후 PECS, 자기효능감, 만족도, 인지부하, 조건별 경험 문항 구성을 확인합니다.</p>
-    </a>
-  </section>
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="micro">🐰 달에서 내려온 비정상 사용 연구원</span>
+      <h1>달토끼 AI 연구소<br><em>AI를 이상하게</em><br>써봅니다.</h1>
+      <p class="hero-copy">기능 설명은 짧게. 궁금하면 바로 시켜봅니다. 말을 듣는지, 어디서 망하는지, 왜 갑자기 다른 사람이 되는지 직접 확인하고 기록합니다.</p>
+      <span class="warning-note">※ 정상적인 사용법은 다른 곳에서 찾아주세요.</span>
+      <div class="actions"><a class="btn dark" href="#today">오늘의 실험 →</a><a class="btn" href="#lab">실험실 구경</a></div>
+    </div>
+    <div class="visual">
+      <div class="stamp top">실패도<br>결과임</div>
+      <div class="stamp bottom">일단 해봄</div>
+      <div class="visual-card"><span class="tape"></span><img src="/assets/logo.png" alt="달토끼 로고"></div>
+    </div>
+  </div>
+</header>
 
-  <section class="soft-card p-7 mb-6">
-    <h2 class="text-xl font-bold text-slate-800 mb-4">조건별 실험 화면 바로가기</h2>
-    <div class="grid md:grid-cols-3 gap-5">
-      <a href="group1-demo.html" class="task-card p-5">
-        <span class="group-badge bg-slate-200 text-slate-700">Control</span>
-        <h3 class="font-bold text-lg mt-3">기본 가이드 + 자유 작성</h3>
-        <p class="text-sm text-slate-500 mt-2">영상 시청 후 목표 이미지를 보고 자유롭게 프롬프트를 작성합니다.</p>
-      </a>
-      <a href="group2-demo.html" class="task-card p-5">
-        <span class="group-badge bg-blue-100 text-blue-700">Context</span>
-        <h3 class="font-bold text-lg mt-3">블록 조립 + Shadowing</h3>
-        <p class="text-sm text-slate-500 mt-2">블록 선택 → 문장화 → 직접 타이핑 과정을 통해 프롬프트 구조를 익힙니다.</p>
-      </a>
-      <a href="group3-demo.html" class="task-card p-5">
-        <span class="group-badge bg-green-100 text-green-700">Advanced</span>
-        <h3 class="font-bold text-lg mt-3">단계별 도전 + 점수 피드백</h3>
-        <p class="text-sm text-slate-500 mt-2">초급·중급·고급 도전과 피드백을 통해 이미지를 정교화합니다.</p>
-      </a>
+<main>
+  <section id="today">
+    <div class="wrap">
+      <div class="board">
+        <span class="chip">⚠ NOTION에서 방금 가져온 실험</span>
+        <h3 id="todayTitle">Notion 연구노트를 확인하는 중…</h3>
+        <p id="todaySummary">잠시만 기다려주세요.</p>
+        <span class="scribble" id="todayRabbit"></span>
+      </div>
     </div>
   </section>
 
-  <div class="info-callout text-sm"><strong>저장 안내</strong><br>이 심사용 데모는 Google Sheet 및 연구 원자료와 연결되어 있지 않습니다. OpenAI 기반 생성 기능은 화면 체험을 돕기 위한 별도 기능입니다.</div>
-</div>
-<script>document.addEventListener('DOMContentLoaded',()=>{document.getElementById('top-nav').innerHTML=buildTopNav('index');});</script>
-</body></html>
+  <section id="lab">
+    <div class="wrap">
+      <div class="section-head">
+        <div><span class="label">NOTION CMS → NETLIFY → WEB</span><h2>달토끼 실험실</h2></div>
+        <p>Notion에서 `상태 = 공개`로 둔 콘텐츠만 자동으로 불러옵니다. 수정 내용은 CDN 캐시 때문에 보통 약 1분 안팎으로 갱신됩니다.</p>
+      </div>
+      <div class="filters" id="filters"></div>
+      <div id="contentCards"><div class="loading">🐰 Notion에서 실험 기록을 가져오는 중…</div></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap footer"><span>© 2026 달토끼 AI 연구소</span><span>Notion CMS · Netlify Functions</span></div></footer>
+
+<script>
+const fallbackThumbs = {
+  "polite-vs-rude":"/assets/sticker_hello.png",
+  "dont-vs-do":"/assets/sticker_flustered.png",
+  "character-edit-collapse":"/assets/sticker_thanks.png",
+  "my-voice-speaks-sings":"/assets/sticker_like.png",
+  "korean-vs-english":"/assets/sticker_congrats.png",
+  "why-my-ai-different":"/assets/sticker_heart.png"
+};
+
+let all = [];
+let currentType = "전체";
+
+function escapeHtml(s=""){return String(s).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]))}
+function safeSrc(url, slug){return url && /^https?:\/\//i.test(url) ? url : (fallbackThumbs[slug] || "/assets/logo.png")}
+function badgeClass(name){return name==="엥? 말을 들음"?"yellow":name==="실험중"?"blue":""}
+
+function renderFilters(){
+  const types=["전체",...new Set(all.map(x=>x.type).filter(Boolean))];
+  document.getElementById("filters").innerHTML=types.map(t =>
+    `<button class="filter ${t===currentType?"active":""}" data-type="${escapeHtml(t)}">${escapeHtml(t)}</button>`
+  ).join("");
+  document.querySelectorAll(".filter[data-type]").forEach(btn=>{
+    btn.onclick=()=>{currentType=btn.dataset.type;renderFilters();renderCards()}
+  });
+}
+
+function renderCards(){
+  const items=currentType==="전체"?all:all.filter(x=>x.type===currentType);
+  const el=document.getElementById("contentCards");
+  if(!items.length){el.innerHTML='<div class="loading">아직 공개된 콘텐츠가 없습니다. 달토끼가 실험 중입니다.</div>';return}
+  el.className="cards";
+  el.innerHTML=items.map(x=>`
+    <article class="card" onclick="location.href='/detail.html?slug=${encodeURIComponent(x.slug)}'">
+      <div class="card-img"><img src="${escapeHtml(safeSrc(x.thumb,x.slug))}" alt=""></div>
+      ${x.badge&&x.badge!=="없음"?`<span class="bstamp ${badgeClass(x.badge)}">${escapeHtml(x.badge)}</span>`:""}
+      <div class="meta">
+        <span class="chip">${escapeHtml(x.id)}</span><span class="chip">${escapeHtml(x.type)}</span>
+        ${(x.tools||[]).map(t=>`<span class="chip tool">${escapeHtml(t)}</span>`).join("")}
+      </div>
+      <h3>${escapeHtml(x.title)}</h3>
+      <p>${escapeHtml(x.summary)}</p>
+      ${x.rabbit?`<div class="rabbit-line">🐰 ${escapeHtml(x.rabbit)}</div>`:""}
+      <div class="card-foot"><span>${escapeHtml(x.published||"연구중")}</span><span>콘텐츠 보기 →</span></div>
+    </article>`).join("");
+}
+
+async function load(){
+  try{
+    const res=await fetch("/api/content",{headers:{"accept":"application/json"}});
+    const data=await res.json();
+    if(!res.ok||!data.ok) throw new Error(data.message||"Notion 데이터를 불러오지 못했습니다.");
+    all=data.items||[];
+    const today=all.find(x=>x.featured)||all[0];
+    if(today){
+      document.getElementById("todayTitle").textContent=today.question||today.title;
+      document.getElementById("todaySummary").textContent=today.summary||"";
+      document.getElementById("todayRabbit").textContent=today.rabbit?`🐰 ${today.rabbit}`:"";
+    }else{
+      document.getElementById("todayTitle").textContent="아직 공개된 실험이 없습니다.";
+      document.getElementById("todaySummary").textContent="Notion에서 상태를 ‘공개’로 바꿔주세요.";
+    }
+    renderFilters();renderCards();
+  }catch(err){
+    document.getElementById("contentCards").className="";
+    document.getElementById("contentCards").innerHTML=`
+      <div class="errorbox"><strong>⚠ Notion 연결을 확인해주세요.</strong>${escapeHtml(err.message)}<br><br>
+      <a class="btn" href="/setup-check.html">연결 상태 확인 →</a></div>`;
+    document.getElementById("todayTitle").textContent="Notion 연결 전입니다.";
+    document.getElementById("todaySummary").textContent="Netlify 환경변수와 Notion 연결 권한을 확인해주세요.";
+  }
+}
+load();
+</script>
+</body>
+</html>

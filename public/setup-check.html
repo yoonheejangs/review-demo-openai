@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>달토끼 CMS 연결 확인</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    main{padding:54px 0 80px}.setup{max-width:800px;margin:auto}
+    .setup h1{font-size:42px;line-height:1.05;margin-bottom:12px}
+    .step{background:#fff;border:1px solid var(--line);border-radius:24px;padding:22px;margin:14px 0}
+    .step h2{font-size:18px;margin:0 0 8px}.step p,.step li{color:var(--muted);font-size:14px}
+    code{background:#f1e9de;padding:2px 6px;border-radius:6px}
+    .status{border-radius:24px;padding:22px;background:#fff4c9;border:1px dashed #c79f50;margin:18px 0}
+    .ok{background:#e9f5e4;border-color:#85aa72}.bad{background:#fff0ee;border-color:#d27b72}
+  </style>
+</head>
+<body>
+<nav class="nav"><div class="wrap nav-in"><a class="brand" href="/"><i>🌙</i><span>달토끼 AI 연구소<small>관리자 연결 확인</small></span></a><a class="pill" href="/">홈으로</a></div></nav>
+<main><div class="wrap setup">
+  <span class="micro">관리자용 · 공개 링크 공유는 권장하지 않음</span>
+  <h1>Notion ↔ Netlify<br>연결 확인</h1>
+  <p>아래 상태가 초록색이면 이후에는 Notion에서 글만 고치면 됩니다.</p>
+
+  <div class="status" id="status">🐰 연결을 검사하는 중…</div>
+
+  <div class="step"><h2>1. Netlify 환경변수</h2><p>Netlify 프로젝트에서 <code>NOTION_TOKEN</code>을 등록해야 합니다. 토큰은 웹 파일에 직접 쓰면 안 됩니다.</p></div>
+  <div class="step"><h2>2. Notion 연결 권한</h2><p>Notion의 <b>🌙 달토끼 AI 연구소 CMS</b> 페이지에 만든 Integration/Connection을 추가하세요. 부모 페이지에 권한을 주면 아래 콘텐츠 DB와 콘텐츠 페이지에도 접근할 수 있습니다.</p></div>
+  <div class="step"><h2>3. 공개 조건</h2><p>웹사이트에는 DB의 <code>상태 = 공개</code>인 항목만 나옵니다. 상세주소는 <code>슬러그</code> 값을 사용합니다.</p></div>
+  <div class="step"><h2>4. 수정 반영 시간</h2><p>사이트는 Notion을 실시간 API로 읽되 Netlify CDN에서 약 60초 캐시합니다. 수정 직후에는 잠깐 이전 내용이 보일 수 있습니다.</p></div>
+</div></main>
+<script>
+async function check(){
+ const el=document.getElementById("status");
+ try{
+  const r=await fetch("/api/health",{cache:"no-store"}),d=await r.json();
+  if(!r.ok||!d.ok)throw new Error(d.message||"연결 실패");
+  el.className="status ok";
+  el.innerHTML=`✅ <b>연결 정상</b><br>Notion API ${d.apiVersion}<br><small>확인 시각: ${new Date(d.checkedAt).toLocaleString("ko-KR")}</small>`;
+ }catch(e){
+  el.className="status bad";
+  el.innerHTML=`⚠ <b>아직 연결되지 않았습니다.</b><br>${String(e.message)}<br><small>아래 1~2번을 먼저 확인해주세요.</small>`;
+ }
+}
+check();
+</script>
+</body>
+</html>

@@ -1,18 +1,9 @@
 {
-  "name": "openai-review-demo-package",
-  "version": "1.0.0",
-  "type": "module",
-  "description": "Reviewer demo UI with OpenAI image generation and guide endpoints",
-  "main": "server.js",
+  "name": "daltokki-ai-lab-netlify",
+  "version": "0.3.0",
+  "private": true,
+  "description": "달토끼 AI 연구소 - Notion CMS + Netlify Functions",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js"
-  },
-  "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.19.2"
-  },
-  "engines": {
-    "node": "20.x"
+    "dev": "netlify dev"
   }
 }
